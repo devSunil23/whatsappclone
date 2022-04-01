@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Contactlist from "./components/Contactlist";
+import Livechat from "./components/Livechat";
+import Placeholder from "./components/Placeholder";
 
-function App() {
+const App = () => {
+  const [selectChat, setSelectChat] = useState(false);
+  const [senderImage, setSenderImage] = useState("");
+  const [senderName, setSenderName] = useState("");
+
+  const setInfo = (imageUrl, senderName) => {
+    setSelectChat(true);
+    setSenderImage(imageUrl);
+    setSenderName(senderName);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="container">
+        <Contactlist setInfo={setInfo}></Contactlist>
+        {selectChat ? (
+          <Livechat senderImage={senderImage} senderName={senderName} />
+        ) : (
+          <Placeholder />
+        )}
+      </div>
+    </>
   );
-}
+};
 
 export default App;
